@@ -1,6 +1,4 @@
-import java.util.Scanner;
-public class Main {
-    public class Sat {
+public class Sat {
         private int sati, minute, sekunde;
 
         public Sat(int sati, int minute, int sekunde) {
@@ -82,4 +80,3 @@ public class Main {
             s.Ispisi();
         }
     }
-}
