@@ -1,82 +1,39 @@
-public class Sat {
-        private int sati, minute, sekunde;
+import java.util.Scanner;
+public class Main{
+    public static double calculateSinus(double number) {
+        return Math.sin(number);
+    }
 
-        public Sat(int sati, int minute, int sekunde) {
-            Postavi(sati, minute, sekunde);
+    public static long calculateFactorial(int number) {
+        if (number < 0) {
+            return -1; // Invalid input
+        }
+        long factorial = 1;
+        for (int i = 1; i <= number; i++) {
+            factorial *= i;
+        }
+        return factorial;
+    }
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Molimo unesite točno jedan broj.");
+            return;
         }
 
-        public void Postavi(int sati, int minute, int sekunde) {
-            this.sati = sati;
-            this.minute = minute;
-            this.sekunde = sekunde;
-        }
+        try {
+            double inputNumber = Double.parseDouble(args[0]);
+            double sinusResult = calculateSinus(inputNumber);
+            System.out.println("Sinus od " + inputNumber + " je: " + sinusResult);
 
-        public void Sljedeci() {
-            sekunde++;
-            if (sekunde == 60) {
-                sekunde = 0;
-                minute++;
-            }
-            if (minute == 60) {
-                minute = 0;
-                sati++;
-            }
-            if (sati == 24) {
-                sati = 0;
-            }
-        }
-
-        public void Prethodni() {
-            sekunde--;
-            if (sekunde == -1) {
-                sekunde = 59;
-                minute--;
-            }
-            if (minute == -1) {
-                minute = 59;
-                sati--;
-            }
-            if (sati == -1) {
-                sati = 23;
-            }
-        }
-
-        public void PomjeriZa(int pomak) {
-            if (pomak > 0) {
-                for (int i = 0; i < pomak; i++) {
-                    Sljedeci();
-                }
+            int intInputNumber = (int) inputNumber;
+            long factorialResult = calculateFactorial(intInputNumber);
+            if (factorialResult == -1) {
+                System.out.println("Faktorijel se ne može izračunati za negativne brojeve.");
             } else {
-                for (int i = 0; i < -pomak; i++) {
-                    Prethodni();
-                }
+                System.out.println("Faktorijel od " + intInputNumber + " je: " + factorialResult);
             }
-        }
-
-        public int DajSate() {
-            return sati;
-        }
-
-        public int DajMinute() {
-            return minute;
-        }
-
-        public int DajSekunde() {
-            return sekunde;
-        }
-
-        public void Ispisi() {
-            System.out.println(sati + ":" + minute + ":" + sekunde);
-        }
-
-        public static void main(String[] args) {
-            Sat s = new Sat(15, 30, 45);
-            s.Ispisi();
-            s.Sljedeci();
-            s.Ispisi();
-            s.PomjeriZa(-48);
-            s.Ispisi();
-            s.Postavi(0, 0, 0);
-            s.Ispisi();
+        } catch (NumberFormatException e) {
+            System.out.println("Uneseni argument nije valjani broj.");
         }
     }
+}
