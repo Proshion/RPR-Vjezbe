@@ -3,15 +3,36 @@ package org.example;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class LaptopDaoJSONFileTest {
 
+    @Mock
     private LaptopDaoJSONFile laptopDao;
+
+    @BeforeEach
+    void setUp(@TempDir File tempDir) {
+        MockitoAnnotations.openMocks(this);
+        File file = new File(tempDir, "test.json");
+        laptopDao = spy(new LaptopDaoJSONFile(file));
+    }
+
+    @Test
+    void dodajLaptopUListu_ShouldAddLaptop() {
+        Laptop laptop = new Laptop("Dell", "XPS 15", 2000.0, 16, 512, 0, "Intel i7", "NVIDIA GTX 1650", 15.6);
+        doNothing().when(laptopDao).dodajLaptopUListu(laptop);
+        laptopDao.dodajLaptopUListu(laptop);
+        verify(laptopDao, times(1)).dodajLaptopUListu(laptop);
+        ArrayList<Laptop> laptops = laptopDao.vratiPodatkeIzDatoteke();
+        assertTrue(laptops.contains(laptop));
+    }
 
     @BeforeEach
     void setUp(@TempDir File tempDir) {
